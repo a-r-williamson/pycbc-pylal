@@ -379,6 +379,7 @@ def main(trigFiles, ifoTag, userTag, segdir, outdir, grbTag=None, numTrials=6,\
   # construct new xml file names
   start = int(trigFiles[0].split('-')[-2])
   end = int(trigFiles[0].split('-')[-1].split('.')[0]) + start
+  grbTag = grbTag.upper()
   if timeSlides:
     tsUserTag = '%s_TIMESLIDES' %(userTag)
     if grbTag:
