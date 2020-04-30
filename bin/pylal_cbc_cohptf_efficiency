@@ -1766,6 +1766,42 @@ def main(segdir, outdir, trigFile, foundFile, missedFile,\
     fig.savefig("%s/missed_found_injections_dist_time.png" % outdir)
     plt.close()
 
+    # found missed distance v time with SNR
+    fig, (axb, ax) = plt.subplots(2, 1, sharex=True,
+                                  gridspec_kw=dict(height_ratios=[1, 5]))
+    axb.set_yscale("log")
+    for key in trigTime[zeroLagSlideID]:
+        axb.plot(trigTime[zeroLagSlideID][key] - grbTime,
+                 trigSNR[zeroLagSlideID][key], "bx", ms=2)
+    axb.grid()
+    axb.minorticks_off()
+    plt.setp(axb.get_xticklabels(), visible=False)
+    ax.set_yscale("log")
+    if len(gFoundTime):
+      ax.scatter(gFoundTime, gFoundDist, c=fnd_col, marker='+', s=15)
+    if len(gIFARTime):
+      p = ax.scatter(gIFARTime[MF], gIFARDist[MF], c=gIFARStat[MF], vmin=0,
+                     vmax=1, s=40, edgecolor="w")
+    if len(gMissed2Time):
+      ax.scatter(gMissed2Time, gMissed2Dist, c="r", marker='x', s=40)
+    if len(missedInjTime):
+      ax.scatter(missedInjTime, missedInjDist, c="k", marker='x', s=40)
+    if len(gIFARTime):
+      cb = plt.colorbar(p, label="FAP")
+    ax.grid()
+    ax.set_xlabel("Time since %d" % grbTime)
+    ax.set_ylabel("Distance (Mpc)")
+    axb.set_ylabel("SNR")
+    plt.tight_layout()
+    plt.subplots_adjust(hspace=0)
+    pos = ax.get_position()
+    posb = axb.get_position()
+    axb.set_position([posb.x0,posb.y0,pos.width,posb.height])
+    ax.set_xlim(start, end)
+    axb.set_xlim(start, end)
+    fig.savefig("%s/missed_found_injections_dist_time_snr.png" % outdir)
+    plt.close()
+
     # Site-specific plots
     sitename = { 'G':'GEO', 'H':'Hanford', 'L':'Livingston', 'V':'Virgo',\
                  'T':'TAMA' }
