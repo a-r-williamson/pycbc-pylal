@@ -1183,7 +1183,7 @@ def main(trigFile, injFile, tag, outdir, segdir, chisq_index=4.0,\
   p+=1 
   for ifo in ifos:
     pts.remove()
-    pts = ax.scatter(360 - lons, lats, c=resps[ifo], s=40, edgecolors='black',
+    pts = ax.scatter(360 - lons, lats, c=resps[ifo], s=80, edgecolors='black',
                      vmin=0, vmax=1)
     cb = plt.colorbar(pts, label="antenna response",
                       ticks=[0, min(resps[ifo]), max(resps[ifo]), 1])
